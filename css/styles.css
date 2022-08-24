@@ -1,0 +1,106 @@
+body {
+    background-color: #f3f3f3;
+    font-family: 'Roboto', sans-serif;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.05);
+    margin-bottom: 26px;
+}
+
+header img {
+    width: 75px;
+    height: 53px;
+    margin-left: 22px;
+}
+
+header ion-icon {
+    font-size: 45px;
+    margin-right: 21px;
+}
+
+main {
+    /* background-color: blue; */
+    width: 100%;
+    height: 100%;
+}
+
+.chat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.chat li {
+    display: flex;
+    align-items: center;
+    margin: 0px 0px 4px 0px;
+    flex-wrap: wrap;
+    line-height: 20px;
+    padding: 13px 0px 13px 9px;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.in-msg, .out-msg {
+    background-color: #dcdcdc;
+}
+
+.to-all-msg {
+    background-color: #ffffff;
+}
+
+.reserved-msg {
+    background-color: #ffdede;
+}
+
+.time {
+    font-size: 14px;
+    color: #aaaaaa;
+    font-weight: 400;
+}
+
+.sender .receiver {
+    font-size: 14px;
+}
+
+footer{
+    height: 80px;
+    display: flex;
+    background-color: red;
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+}
+
+footer input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    box-shadow: 0 0 10px 10px rgba(0,0,0,0.05);
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+footer input::placeholder {
+    font-style: italic;
+}
+
+footer ion-icon {
+    font-size: 26px;
+    position: fixed;
+    right: 18px;
+    bottom: 27px;
+}
+
+.hide {
+    display: none;
+}

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,11 +9,68 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/styles.css">
 
-    <title>Bate-Papo Uol</title>    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+
+    <title>Bate-Papo Uol</title>
 </head>
 
 <body>
-    <header></header>
-    <main></main>
+    <header>
+        <figure>
+            <img src="images/logo_uol.png" alt="Uol Logo">
+        </figure>
+        <figure>
+            <ion-icon name="people"></ion-icon>
+        </figure>
+    </header>
+    <main>
+        <ul class="chat">
+            <li class="in-msg">
+                <span class="time">(09:21:45)</span>&nbsp
+                <span class="bold sender">João</span>&nbsp
+                entra na sala...
+            </li>
+            <li class="to-all-msg">
+                <span class="time">(09:22:28)</span>&nbsp                
+                <span class="bold sender">João</span>&nbsp
+                para&nbsp
+                <span class="bold receiver">Todos</span>:&nbsp
+                <span class="msg-text">Bom dia</span>
+            </li>
+            <li class="to-all-msg">
+                <span class="time">(09:21:45)</span>&nbsp                
+                <span class="bold sender">Maria</span>&nbsp
+                para&nbsp
+                <span class="bold receiver">João</span>:&nbsp
+                <span class="msg-text">Oi João :)</span>
+            </li>
+            <li class="reserved-msg">
+                <span class="time">(09:21:45)</span>&nbsp                
+                <span class="bold sender">João</span>&nbsp
+                reservadamente para&nbsp
+                <span class="bold receiver">Maria</span>:&nbsp
+                <span class="msg-text">Oi gatinha, quer tc?</span>
+            </li>
+            <li class="out-msg">
+                <span class="time">(09:21:45)</span>&nbsp
+                <span class="bold sender">Maria</span>&nbsp
+                sai da sala...
+            </li>
+        </ul>
+    </main>
+    <footer>
+        <input type="text" placeholder="Escreva aqui...">
+        <ion-icon name="paper-plane-outline"></ion-icon>
+    </footer>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/script.js"></script>
 </body>
+
 </html>
