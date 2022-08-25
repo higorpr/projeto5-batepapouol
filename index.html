@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <header>
+    <header class="hide chat-page">
         <figure>
             <img src="images/logo_uol.png" alt="Uol Logo">
         </figure>
@@ -28,41 +28,48 @@
         </figure>
     </header>
     <main>
-        <ul class="chat">
-            <li class="in-msg">
-                <span class="time">(09:21:45)</span>&nbsp
-                <span class="bold sender">João</span>&nbsp
-                entra na sala...
-            </li>
-            <li class="to-all-msg">
-                <span class="time">(09:22:28)</span>&nbsp                
-                <span class="bold sender">João</span>&nbsp
-                para&nbsp
-                <span class="bold receiver">Todos</span>:&nbsp
-                <span class="msg-text">Bom dia</span>
-            </li>
-            <li class="to-all-msg">
-                <span class="time">(09:21:45)</span>&nbsp                
-                <span class="bold sender">Maria</span>&nbsp
-                para&nbsp
-                <span class="bold receiver">João</span>:&nbsp
-                <span class="msg-text">Oi João :)</span>
-            </li>
-            <li class="reserved-msg">
-                <span class="time">(09:21:45)</span>&nbsp                
-                <span class="bold sender">João</span>&nbsp
-                reservadamente para&nbsp
-                <span class="bold receiver">Maria</span>:&nbsp
-                <span class="msg-text">Oi gatinha, quer tc?</span>
-            </li>
-            <li class="out-msg">
-                <span class="time">(09:21:45)</span>&nbsp
-                <span class="bold sender">Maria</span>&nbsp
-                sai da sala...
-            </li>
-        </ul>
+        <div class="entry-page">
+            <img src="images/logo_uol.png" alt="">
+            <input type="text" placeholder="Digite seu nome">
+            <button onclick='enterChat()'>Entrar</button>
+        </div>
+        <div>
+            <ul class="chat hide chat-page">
+                <li class="in-msg">
+                    <span class="time">(09:21:45)</span>&nbsp
+                    <span class="bold sender">João</span>&nbsp
+                    entra na sala...
+                </li>
+                <li class="to-all-msg">
+                    <span class="time">(09:22:28)</span>&nbsp
+                    <span class="bold sender">João</span>&nbsp
+                    para&nbsp
+                    <span class="bold receiver">Todos</span>:&nbsp
+                    <span class="msg-text">Bom dia</span>
+                </li>
+                <li class="to-all-msg">
+                    <span class="time">(09:21:45)</span>&nbsp
+                    <span class="bold sender">Maria</span>&nbsp
+                    para&nbsp
+                    <span class="bold receiver">João</span>:&nbsp
+                    <span class="msg-text">Oi João :)</span>
+                </li>
+                <li class="reserved-msg">
+                    <span class="time">(09:21:45)</span>&nbsp
+                    <span class="bold sender">João</span>&nbsp
+                    reservadamente para&nbsp
+                    <span class="bold receiver">Maria</span>:&nbsp
+                    <span class="msg-text">Oi gatinha, quer tc?</span>
+                </li>
+                <li class="out-msg">
+                    <span class="time">(09:21:45)</span>&nbsp
+                    <span class="bold sender">Maria</span>&nbsp
+                    sai da sala...
+                </li>
+            </ul>
+        </div>
     </main>
-    <footer>
+    <footer class="chat-page hide">
         <input type="text" placeholder="Escreva aqui...">
         <ion-icon name="paper-plane-outline"></ion-icon>
     </footer>

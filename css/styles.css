@@ -30,6 +30,43 @@ main {
     height: 100%;
 }
 
+.entry-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.entry-page img {
+    width: 130px;
+    height: 92px;
+    margin: 72px 0 94px 0;
+}
+
+.entry-page input {
+    display: flex;
+    text-align: center;
+    width: 261px;
+    height: 54px;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 18px;
+    color: #aeaeae;
+    border: 1px solid #d7d7d7;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+.entry-page button {
+    width: 109px;
+    height: 45px;
+    background-color: #e7e7e7;
+    font-size: 18px;
+    font-weight: 400;
+    color: #696969;
+    border-radius: 9px;
+    border: none;
+}
+
 .chat {
     display: flex;
     flex-direction: column;
