@@ -82,7 +82,9 @@ function initialDisplay(serverResponse) {
 }
 
 function printMessage(msg) {
+    // Getting chat list in HTML
     const msgList = document.querySelector('.chat');
+    // Printing message
     if (msg.type === 'status') {
         msgList.innerHTML += 
         `<li class="entry-msg">
@@ -98,5 +100,18 @@ function printMessage(msg) {
             <span class="bold receiver">${msg.to}</span>:&nbsp
             <span class="msg-text">${msg.text}</span>
         </li>`
+    } else {
+        `<li class="reserved-msg">
+            <span class="time">(${msg.time})</span>&nbsp
+            <span class="bold sender">${msg.from}</span>&nbsp
+            reservadamente para&nbsp
+            <span class="bold receiver">${msg.to}</span>:&nbsp
+            <span class="msg-text">${msg.text}</span>
+        </li>`
     }
+
+    // Scrolling viewport
+    const listMessage = msgList.children;
+    const lastMessage = listMessage[listMessage.length-1];
+    lastMessage.scrollIntoView();
 }
