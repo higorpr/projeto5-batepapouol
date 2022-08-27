@@ -29,12 +29,13 @@
     </header>
     <main>
         <div class="entry-page">
-            <img src="images/logo_uol.png" alt="">
-            <input class="input-box" type="text" placeholder="Digite seu nome">
-            <button onclick='getName()'>Entrar</button>
+            <img src="images/logo_uol.png" alt="Logo Uol">
+            <input class="input-box load" type="text" placeholder="Digite seu nome">
+            <button class='load' onclick='getName()'>Entrar</button>
+            <img class='load-gif load hide' src="images/load_gif2.gif" alt="">
         </div>
         <div>
-            <ul class="chat hide chat-page">
+            <ul class="chat chat-page hide">
                 <li class="entry-msg">
                     <span class="time">(09:21:45)</span>&nbsp
                     <span class="bold sender">João</span>&nbsp
@@ -70,8 +71,8 @@
         </div>
     </main>
     <footer class="chat-page hide">
-        <input type="text" placeholder="Escreva aqui...">
-        <ion-icon name="paper-plane-outline"></ion-icon>
+        <input class="msgBox" type="text" placeholder="Escreva aqui...">
+        <ion-icon onclick="sendMsg()" name="paper-plane-outline"></ion-icon>
     </footer>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

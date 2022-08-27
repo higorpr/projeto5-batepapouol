@@ -46,7 +46,7 @@ main {
     margin: 72px 0 94px 0;
 }
 
-.entry-page input {
+.input-box {
     display: flex;
     text-align: center;
     width: 261px;
