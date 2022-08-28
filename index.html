@@ -82,7 +82,7 @@
         </div>
 
     </div>
-    <header class="chat-page">
+    <header class="chat-page hide">
         <figure>
             <img src="images/logo_uol.png" alt="Uol Logo">
         </figure>
@@ -91,15 +91,14 @@
         </figure>
     </header>
     <main>
-        <div class="entry-page hide">
+        <div class="entry-page">
             <img src="images/logo_uol.png" alt="Uol Logo">
             <input class="input-box load" type="text" placeholder="Digite seu nome">
             <button class='load' onclick='getName()'>Entrar</button>
             <img class='load-gif load hide' src="images/load_gif2.gif" alt="Loading Gif">
         </div>
         <div>
-            <!-- toggle hide -->
-            <ul class="chat chat-page">
+            <ul class="chat chat-page hide">
                 <li class="entry-msg">
                     <span class="time">(09:21:45)</span>&nbsp
                     <span class="bold sender">João</span>&nbsp
@@ -134,7 +133,7 @@
             </ul>
         </div>
     </main>
-    <footer class="chat-page">
+    <footer class="chat-page hide">
         <input class="msgBox" type="text" placeholder="Escreva aqui...">
         <ion-icon onclick="enterMsg()" name="paper-plane-outline"></ion-icon>
     </footer>
