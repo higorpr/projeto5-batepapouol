@@ -275,6 +275,11 @@ function reloadPage(res) {
     window.location.reload();
 }
 
+function sidebarToggle() {
+    document.querySelector('.cover').classList.toggle('hide');
+    document.querySelector('.sidebar').classList.toggle('sidebar_on')
+}
+
 // function returnMsg(res) {
 //     console.log(res)
 // }

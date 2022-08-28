@@ -19,13 +19,75 @@
 </head>
 
 <body>
-    <div class="cover hide"></div>
+    <div onclick="sidebarToggle()" class="cover hide"></div>
+    <div class="sidebar">
+        <h1>
+            Escolha um contato para enviar mensagem:
+        </h1>
+        <ul class="users">
+            <li>
+                <div class="user_entry">
+                    <div class="hold_user">
+                        <ion-icon name="people"></ion-icon>
+                        <p>Todos</p>
+                    </div>
+                    <div class="hold_check hide">
+                        <img src="images/checkmark.png" alt="">
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="user_entry">
+                    <div class="hold_user">
+                        <ion-icon name="person-circle"></ion-icon>
+                        <p>João</p>
+                    </div>
+                    <div class="hold_check hide">
+                        <img src="images/checkmark.png" alt="">
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="user_entry">
+                    <div class="hold_user">
+                        <ion-icon name="person-circle"></ion-icon>
+                        <p>Maria</p>
+                    </div>
+                    <div class="hold_check hide">
+                        <img src="images/checkmark.png" alt="">
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <h1>
+            Escolha a visibilidade
+        </h1>
+        <div class="hold_vis">
+            <div class="public visibility">
+                <ion-icon name="lock-open"></ion-icon>
+                <p>Público</p>
+            </div>
+            <div class="hold_check hide">
+                <img src="images/checkmark.png" alt="">
+            </div>
+        </div>
+        <div class="hold_vis">
+            <div class="reserved visibility">
+                <ion-icon name="lock-closed"></ion-icon>
+                <p>Reservadamente</p>
+            </div>
+            <div class="hold_check hide">
+                <img src="images/checkmark.png" alt="">
+            </div>
+        </div>
+
+    </div>
     <header class="chat-page">
         <figure>
             <img src="images/logo_uol.png" alt="Uol Logo">
         </figure>
         <figure>
-            <ion-icon onclick='' name="people"></ion-icon>
+            <ion-icon onclick="sidebarToggle()" name="people"></ion-icon>
         </figure>
     </header>
     <main>
@@ -37,7 +99,7 @@
         </div>
         <div>
             <!-- toggle hide -->
-            <ul class="chat chat-page"> 
+            <ul class="chat chat-page">
                 <li class="entry-msg">
                     <span class="time">(09:21:45)</span>&nbsp
                     <span class="bold sender">João</span>&nbsp
@@ -72,8 +134,7 @@
             </ul>
         </div>
     </main>
-    <!-- toggle hide -->
-    <footer class="chat-page hide">
+    <footer class="chat-page">
         <input class="msgBox" type="text" placeholder="Escreva aqui...">
         <ion-icon onclick="enterMsg()" name="paper-plane-outline"></ion-icon>
     </footer>
