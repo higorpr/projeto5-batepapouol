@@ -280,6 +280,23 @@ function sidebarToggle() {
     document.querySelector('.sidebar').classList.toggle('sidebar_on')
 }
 
+function myKeyPress(e,element){
+    var keynum;
+
+    if(window.event) { // IE                  
+      keynum = e.keyCode;
+    } else if(e.which){ // Netscape/Firefox/Opera                 
+      keynum = e.which;
+    }
+    
+    if (keynum === 13) {
+        if (element.classList.contains('load')) {
+            getName();
+        } else if (element.classList.contains('msgBox')) {
+            enterMsg();
+        }        
+    }
+  }
 // function returnMsg(res) {
 //     console.log(res)
 // }
