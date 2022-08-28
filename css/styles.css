@@ -75,6 +75,10 @@ main {
     border: none;
 }
 
+.entry-page button:hover {
+    cursor: pointer;
+}
+
 .chat {
     display: flex;
     flex-direction: column;
@@ -144,6 +148,15 @@ footer ion-icon {
     position: fixed;
     right: 18px;
     bottom: 27px;
+}
+
+.cover {
+    background-color: rgba(0,0,0,0.6);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top:0;
+    left: 0;
 }
 
 .hide {
