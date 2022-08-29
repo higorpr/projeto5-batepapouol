@@ -1,19 +1,9 @@
-/**
- * Workflow:
- * 
- * 1. getName()
- * 2. sendName()
- * 3.1. enterChat() 
- * 3.2. errorFunction()
- * 4. initalDisplay()
- */
 // Global Variables
 let oldMessages;
 let username;
 let onlineUsers;
 let recipient = 'Todos';
 let msgType = 'message';
-let selected_user;
 
 // Functions
 function getName() {
@@ -133,8 +123,12 @@ function confirmStatus() {
     const confirmUser = { name: username };
     const confirmRequest = axios.post('https://mock-api.driven.com.br/api/v6/uol/status',
         confirmUser);
-    confirmRequest.catch(reloadPage);
+    confirmRequest.catch(statusError);
 
+}
+
+function statusError(err) {
+    console.log(err);
 }
 
 function getUsers() {
@@ -212,7 +206,8 @@ function updateUsers(res) {
 
 function selectUser(element) {
     /**
-     * Function to select user the message is being sent.
+     * Function to select user (on the sidemenu) to which the
+     *  message will be sent.
      */
 
     // Remove checkmark from last recipient:
@@ -229,6 +224,14 @@ function selectUser(element) {
     recipient = clicked;
     // Add checkmark to current recipient:
     element.querySelector('.hold_check').classList.remove('hide');
+
+    // Modify the message input box on the chat page
+    const msgDest = document.querySelector('.msgDestination');
+    if (msgType === 'message') {
+        msgDest.innerHTML = `Enviando para ${recipient} (publicamente)`
+    } else if (msgType === 'private_message') {
+        msgDest.innerHTML = `Enviando para ${recipient} (reservadamente)`
+    }
 }
 
 function printMessage(msg) {
@@ -251,7 +254,7 @@ function printMessage(msg) {
                 </li>`;
     } else if (msg.type === 'message') {
         msgList.innerHTML +=
-            `<li class="to-all-msg">
+            `<li class="public-msg">
             <span class="time">(${msg.time})</span>&nbsp
             <span class="bold sender">${msg.from}</span>&nbsp
             para&nbsp
@@ -260,7 +263,7 @@ function printMessage(msg) {
         </li>`;
     } else if (msg.to === username || msg.from === username) {
         msgList.innerHTML +=
-            `<li class="reserved-msg">
+            `<li class="private-msg">
             <span class="time">(${msg.time})</span>&nbsp
             <span class="bold sender">${msg.from}</span>&nbsp
             reservadamente para&nbsp
@@ -369,6 +372,23 @@ function sidebarToggle() {
 }
 
 function myKeyPress(e, element) {
+    /**
+     * 
+     */
+    // Remove msg destination if something is inputted
+    const msgDest = document.querySelector('.msgDestination');
+    if (element.classList.contains('msgBox')) {
+        if (element.value !== '') {
+            if (!msgDest.classList.contains('hide')) {
+                msgDest.classList.add('hide');
+            }
+        } else {
+            if (msgDest.classList.contains('hide')) {
+                msgDest.classList.remove('hide');
+            }
+        }
+    }
+
     var keynum;
 
     if (window.event) { // IE                  
@@ -386,3 +406,41 @@ function myKeyPress(e, element) {
     }
 }
 
+function selectPrivacy(element) {
+    /**
+     * This function sets the privacy of a message.
+     */
+    // Define type of message
+    const pubCheck = document.querySelector('.public .hold_check').classList;
+    const privCheck = document.querySelector('.private .hold_check').classList;
+
+    if (element.parentNode.classList.contains('public')) {
+        msgType = 'message'
+    } else {
+        msgType = 'private_message'
+    }
+
+    if (msgType === 'message') {
+        if (pubCheck.contains('hide')) {
+            pubCheck.remove('hide');
+            if (!privCheck.contains('hide')) {
+                privCheck.add('hide');
+            }
+        }
+    } else {
+        if (privCheck.contains('hide')) {
+            privCheck.remove('hide');
+            if (!pubCheck.contains('hide')) {
+                pubCheck.add('hide');
+            }
+        }
+    }
+
+    // Modify message on footer
+    const msgDest = document.querySelector('.msgDestination');
+    if (msgType === 'message') {
+        msgDest.innerHTML = `Enviando para ${recipient} (publicamente)`
+    } else if (msgType === 'private_message') {
+        msgDest.innerHTML = `Enviando para ${recipient} (reservadamente)`
+    }
+}

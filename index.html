@@ -30,17 +30,17 @@
         <h1>
             Escolha a visibilidade
         </h1>
-        <div class="hold_vis">
-            <div onclick="selectPrivacy()" class="public visibility">
+        <div class="hold_vis public">
+            <div onclick="selectPrivacy(this)" class="visibility">
                 <ion-icon name="lock-open"></ion-icon>
                 <p>Público</p>
             </div>
-            <div class="hold_check hide">
+            <div class="hold_check">
                 <img src="images/checkmark.png" alt="">
             </div>
         </div>
-        <div class="hold_vis">
-            <div onclick="selectPrivacy()" class="reserved visibility">
+        <div class="hold_vis private">
+            <div onclick="selectPrivacy(this)" class="visibility">
                 <ion-icon name="lock-closed"></ion-icon>
                 <p>Reservadamente</p>
             </div>
@@ -50,7 +50,7 @@
         </div>
     </div>
     <header class="chat-page hide">
-        <figure>
+        <figure onclick="reloadPage()">
             <img src="images/logo_uol.png" alt="Uol Logo">
         </figure>
         <figure>
@@ -101,7 +101,12 @@
         </div>
     </main>
     <footer class="chat-page hide">
-        <input class="msgBox" onkeydown="myKeyPress(event, this)" type="text" placeholder="Escreva aqui...">
+        <div class="msgEnsemble">
+            <input class="msgBox" onkeydown="myKeyPress(event, this)" type="text" placeholder="Escreva aqui...">
+            <p class="msgDestination">
+                Enviando para Todos (publicamente)
+            </p>
+        </div>
         <ion-icon onclick="enterMsg()" name="paper-plane-outline"></ion-icon>
     </footer>
 
