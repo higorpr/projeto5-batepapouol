@@ -10,6 +10,10 @@
 // Global Variables
 let oldMessages;
 let username;
+let onlineUsers;
+let recipient = 'Todos';
+let msgType = 'message';
+let selected_user;
 
 // Functions
 function getName() {
@@ -23,9 +27,7 @@ function getName() {
     } else {
         sendName(username);
     }
-    
 }
-
 
 function sendName(targetName) {
     /**
@@ -51,7 +53,7 @@ function toggleLoad() {
      * gif or the input box and connect button.
      */
     const allLoad = document.querySelectorAll('.load');
-    for (i=0 ; i < allLoad.length; i++) {
+    for (i = 0; i < allLoad.length; i++) {
         allLoad[i].classList.toggle('hide');
     }
 }
@@ -72,10 +74,6 @@ function enterChat(serverResponse) {
     // Getting initial chat messages
     const messages = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
     messages.then(initialDisplay)
-
-    // Seeing active participants
-    // const connectedUsers = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
-    // connectedUsers.then(manageUsers)
 }
 
 function errorFunction(error) {
@@ -90,12 +88,7 @@ function errorFunction(error) {
         toggleLoad();
     } else {
         console.log(error.response);
-    }    
-}
-
-function manageUsers(serverResponse) {
-    console.log('manageUsers')
-    console.log(serverResponse)
+    }
 }
 
 function initialDisplay(serverResponse) {
@@ -123,19 +116,119 @@ function initialDisplay(serverResponse) {
     // Start to get messages at every 3s
     const updateMessages = setInterval(getServerMessages, 3000);
 
-    // Confirms the user is still active
-    const confirm = setInterval(confirmStatus, 5000);
+    // Start periodic confirmation that the user is still active (5 seconds)
+    const confirmUser = setInterval(confirmStatus, 5000);
+
+    // Populates user list
+    getUsers();
+    // Start periodic update of users (10 seconds)
+    const updateUsers = setInterval(getUsers, 10000);
 }
 
 function confirmStatus() {
     /**
-     * This function confirms that the user is still active.
+     * This function confirms that the user is still active, if not, the page is
+     * reloaded.
      */
-     const confirmUser = {name: username};
-     const confirmRequest = axios.post('https://mock-api.driven.com.br/api/v6/uol/status',
-     confirmUser);
-     confirmRequest.catch(errorFunction);
+    const confirmUser = { name: username };
+    const confirmRequest = axios.post('https://mock-api.driven.com.br/api/v6/uol/status',
+        confirmUser);
+    confirmRequest.catch(reloadPage);
 
+}
+
+function getUsers() {
+    /**
+     * This function recovers online users from the server.
+     * On sucess, uploads the user list on the sidebar.
+     * On failure, it reloads the page.
+     */
+    const usersRequest = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
+    usersRequest.then(updateUsers);
+    usersRequest.catch(reloadPage);
+}
+
+function updateUsers(res) {
+    /**
+     * This function updates the active user list and updates the sidebar.
+     */
+    onlineUsers = res.data;
+    let recipient_ok = false;
+
+    // Get HTML for user list
+    const userList = document.querySelector('.users');
+    // First entry "Todos"
+    userList.innerHTML =
+        `<li>
+            <div onclick="selectUser(this)" class="user_entry">
+                <div class="hold_user">
+                    <ion-icon name="people"></ion-icon>
+                    <p>Todos</p>
+                </div>
+                <div class="hold_check hide">
+                    <img src="images/checkmark.png" alt="check">
+                </div>
+            </div>
+        </li>`;
+
+    // Add all users on server
+    for (let i = 0; i < onlineUsers.length; i++) {
+        user = onlineUsers[i];
+        userList.innerHTML +=
+            `<li>
+            <div onclick="selectUser(this)" class="user_entry">
+                <div class="hold_user">
+                    <ion-icon name="person-circle"></ion-icon>
+                    <p>${user.name}</p>
+                </div>
+                <div class="hold_check hide">
+                    <img src="images/checkmark.png" alt="check">
+                </div>
+            </div>
+        </li>`
+    }
+
+    // Get div for current recipient (if they still are in the chat)
+    const entries = document.querySelectorAll('.user_entry')
+    for (let i = 0; i < entries.length; i++) {
+        if (recipient === entries[i].querySelector('p').innerHTML) {
+            entries[i].querySelector('.hold_check').classList.remove('hide');
+            recipient_ok = true;
+            break;
+        }
+    }
+
+    // If the recipient left the chat, then 'Todos' becomes the recipient and is checked
+    if (recipient_ok === false) {
+        recipient = 'Todos'
+        for (let i = 0; i < entries.length; i++) {
+            if (recipient === entries[i].querySelector('p').innerHTML) {
+                entries[i].querySelector('.hold_check').classList.remove('hide');
+                break;
+            }
+        }
+    }
+}
+
+function selectUser(element) {
+    /**
+     * Function to select user the message is being sent.
+     */
+
+    // Remove checkmark from last recipient:
+    const entries = document.querySelectorAll('.user_entry')
+    for (i = 0; i < entries.length; i++) {
+        if (recipient === entries[i].querySelector('p').innerHTML) {
+            entries[i].querySelector('.hold_check').classList.add('hide');
+            break;
+        }
+    }
+
+    // Set new recipient based on clicked element:
+    const clicked = element.querySelector('p').innerHTML;
+    recipient = clicked;
+    // Add checkmark to current recipient:
+    element.querySelector('.hold_check').classList.remove('hide');
 }
 
 function printMessage(msg) {
@@ -148,7 +241,6 @@ function printMessage(msg) {
      */
     // Getting chat list in HTML
     const msgList = document.querySelector('.chat');
-    console.log(`Printing message ${msg} of type ${msg.type}`);
     // Printing message
     if (msg.type === 'status') {
         msgList.innerHTML +=
@@ -159,16 +251,16 @@ function printMessage(msg) {
                 </li>`;
     } else if (msg.type === 'message') {
         msgList.innerHTML +=
-        `<li class="to-all-msg">
+            `<li class="to-all-msg">
             <span class="time">(${msg.time})</span>&nbsp
             <span class="bold sender">${msg.from}</span>&nbsp
             para&nbsp
             <span class="bold receiver">${msg.to}</span>:&nbsp
             <span class="msg-text">${msg.text}</span>
         </li>`;
-    } else {
+    } else if (msg.to === username || msg.from === username) {
         msgList.innerHTML +=
-        `<li class="reserved-msg">
+            `<li class="reserved-msg">
             <span class="time">(${msg.time})</span>&nbsp
             <span class="bold sender">${msg.from}</span>&nbsp
             reservadamente para&nbsp
@@ -184,21 +276,19 @@ function getServerMessages() {
      */
     const newMessagesRequest = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
     newMessagesRequest.then(updateChat);
-    newMessagesRequest.catch(errorFunction) //Mudar no futuro?
+    newMessagesRequest.catch(errorFunction);
 
 }
 
 function updateChat(res) {
     /**
-     * This function updates the chat with new messages if new messages are upated
-     * into the server.
+     * This function updates the chat with new messages if new messages 
+     * came from the server.
      */
-    console.log('Update Chat');
-    console.log(res);
     const newMessages = res.data;
     const j = oldMessages.length - 1;
     let i = newMessages.length - 1;
-    let messages = [];    
+    let messages = [];
 
     // Getting index of the first new message
     while (diffMessages(newMessages[i], oldMessages[j])) {
@@ -209,12 +299,8 @@ function updateChat(res) {
     oldMessages = newMessages;
     messages = messages.reverse();
     if (messages !== []) {
-        console.log('Inside IF');
-        console.log( messages);
         messages.forEach(printMessage);
     }
-    // console.log('outside IF');
-    // console.log(messages);
 
     scrollToNew();
 }
@@ -229,7 +315,7 @@ function diffMessages(msg1, msg2) {
      * UOL Chat API and must be objects from it.
      */
     if ((msg1.from === msg2.from) && (msg1.to === msg2.to) &&
-    (msg1.text === msg2.text) && (msg1.time === msg2.time)) {
+        (msg1.text === msg2.text) && (msg1.time === msg2.time)) {
         return false;
     } else {
         return true;
@@ -251,21 +337,23 @@ function scrollToNew() {
 }
 
 function enterMsg() {
+    /**
+     * This function sends the user message to the server and, 
+     * on success, recovers them and, on failure, reloads the page.
+     */
     // Get typed message and assemble message Object
     const msg = document.querySelector('.msgBox').value;
-    const destiny = 'Todos';
-    const msg_type = 'message';
     const msgObj = {
         from: username,
-        to: destiny,
+        to: recipient,
         text: msg,
-        type: msg_type,
+        type: msgType,
     }
     // Clearing message input box
     document.querySelector('.msgBox').value = '';
     // Send message to server
     const postRequest = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages',
-    msgObj);
+        msgObj);
     postRequest.then(getServerMessages);
     postRequest.catch(reloadPage);
 }
@@ -280,23 +368,21 @@ function sidebarToggle() {
     document.querySelector('.sidebar').classList.toggle('sidebar_on')
 }
 
-function myKeyPress(e,element){
+function myKeyPress(e, element) {
     var keynum;
 
-    if(window.event) { // IE                  
-      keynum = e.keyCode;
-    } else if(e.which){ // Netscape/Firefox/Opera                 
-      keynum = e.which;
+    if (window.event) { // IE                  
+        keynum = e.keyCode;
+    } else if (e.which) { // Netscape/Firefox/Opera                 
+        keynum = e.which;
     }
-    
+
     if (keynum === 13) {
         if (element.classList.contains('load')) {
             getName();
         } else if (element.classList.contains('msgBox')) {
             enterMsg();
-        }        
+        }
     }
-  }
-// function returnMsg(res) {
-//     console.log(res)
-// }
+}
+

@@ -88,6 +88,7 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    word-break: break-word;
 }
 
 .chat li {
@@ -195,6 +196,7 @@ footer ion-icon {
 
 .users li {
     line-height: 36px;
+    word-break: break-word;
 }
 
 .users p {
